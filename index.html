@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ヒヤリングみっけ｜あなたの困りごとがアプリになる</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #223670;
+    --gold: #D0A900;
+    --gold-light: #F5E07A;
+    --bg: #F7F5F0;
+    --white: #FFFFFF;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --card-shadow: 0 4px 24px rgba(34,54,112,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ヘッダー */
+  header {
+    background: var(--navy);
+    padding: 20px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(208,169,0,0.15);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(208,169,0,0.10);
+  }
+  .header-label {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+  .header-title {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--white);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    position: relative; z-index: 1;
+  }
+  .header-title span { color: var(--gold); }
+  .header-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    margin-top: 8px;
+    position: relative; z-index: 1;
+  }
+
+  /* プログレスバー */
+  .progress-wrap {
+    background: var(--white);
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .progress-steps {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+  }
+  .step-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #9ca3af;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .step-dot.active {
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: 0 0 0 3px rgba(34,54,112,0.2);
+  }
+  .step-dot.done {
+    background: var(--gold);
+    color: var(--white);
+  }
+  .step-line {
+    flex: 1;
+    max-width: 40px;
+    height: 2px;
+    background: #e5e7eb;
+    transition: background 0.3s;
+  }
+  .step-line.done { background: var(--gold); }
+  .step-label {
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* メインコンテナ */
+  main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  /* ステップカード */
+  .step-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: var(--card-shadow);
+    animation: fadeUp 0.4s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-number {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .step-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .step-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  /* 業種ボタン */
+  .industry-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .industry-btn {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px 10px;
+    background: var(--white);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .industry-btn .icon { font-size: 24px; display: block; margin-bottom: 6px; }
+  .industry-btn .label { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .industry-btn .sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .industry-btn:hover {
+    border-color: var(--navy);
+    background: #f0f4ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34,54,112,0.12);
+  }
+  .industry-btn.selected {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #fffbea, #fff8d6);
+    box-shadow: 0 4px 12px rgba(208,169,0,0.2);
+  }
+
+  /* 困りごとチェック */
+  .problem-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .problem-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--white);
+  }
+  .problem-item:hover {
+    border-color: var(--navy);
+    background: #f0f4ff;
+  }
+  .problem-item.selected {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #fffbea, #fff8d6);
+  }
+  .problem-item input[type=checkbox] { display: none; }
+  .check-box {
+    width: 22px; height: 22px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    font-size: 13px;
+  }
+  .problem-item.selected .check-box {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--white);
+  }
+  .problem-text { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.5; }
+  .problem-emoji { font-size: 18px; flex-shrink: 0; }
+
+  /* テキストエリア */
+  .free-textarea {
+    width: 100%;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .free-textarea:focus { border-color: var(--navy); }
+  .free-textarea::placeholder { color: #9ca3af; }
+
+  /* ボタン */
+  .btn-primary {
+    width: 100%;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 20px;
+    letter-spacing: 1px;
+  }
+  .btn-primary:hover {
+    background: #1a2a5a;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(34,54,112,0.3);
+  }
+  .btn-primary:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .btn-secondary {
+    width: 100%;
+    background: transparent;
+    color: var(--muted);
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+  }
+  .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ローディング */
+  .loading-wrap {
+    text-align: center;
+    padding: 40px 0;
+  }
+  .loading-icon {
+    font-size: 48px;
+    display: block;
+    margin: 0 auto 16px;
+    animation: spin 1.5s linear infinite;
+  }
+  @keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .loading-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .loading-sub { font-size: 12px; color: var(--muted); }
+  .loading-dots span {
+    display: inline-block;
+    animation: blink 1.2s infinite;
+    font-size: 20px;
+    color: var(--gold);
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.3s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+
+  /* 結果カード */
+  .result-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .result-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), #e8bc00);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .result-app-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .result-tagline {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .result-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 20px 0;
+  }
+
+  .reason-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .reason-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .reason-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #f8faff;
+    border-left: 3px solid var(--navy);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .reason-num {
+    font-weight: 700;
+    color: var(--navy);
+    flex-shrink: 0;
+    font-size: 11px;
+    background: var(--navy);
+    color: var(--white);
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+
+  .ba-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .ba-card {
+    border-radius: 10px;
+    padding: 14px 12px;
+  }
+  .ba-before {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+  }
+  .ba-after {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+  }
+  .ba-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .ba-before .ba-label { color: #ef4444; }
+  .ba-after .ba-label { color: #22c55e; }
+  .ba-text { font-size: 12px; line-height: 1.6; color: var(--text); }
+
+  .cta-section {
+    background: linear-gradient(135deg, var(--navy), #1a2a5a);
+    border-radius: 14px;
+    padding: 24px 20px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .cta-title {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .cta-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .btn-cta {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 28px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .btn-cta:hover {
+    background: #b89000;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(208,169,0,0.4);
+  }
+  .btn-retry {
+    display: block;
+    margin-top: 12px;
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* フッター */
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: #9ca3af;
+  }
+  footer span { color: var(--gold); }
+
+  /* タグ表示 */
+  .tag-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .tag {
+    background: #eef2ff;
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #c7d2fe;
+  }
+
+  /* 選択件数バッジ */
+  .select-count {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 700;
+    text-align: right;
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="header-label">Smile Plus Consulting</p>
+  <h1 class="header-title">ヒヤリング<span>みっけ</span></h1>
+  <p class="header-sub">あなたの困りごとが、アプリになる</p>
+</header>
+
+<!-- プログレス -->
+<div class="progress-wrap">
+  <div class="progress-steps" id="progressBar">
+    <div class="step-dot active" id="dot1">1</div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-dot" id="dot2">2</div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-dot" id="dot3">3</div>
+    <div class="step-line" id="line3"></div>
+    <div class="step-dot" id="dot4">4</div>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding:4px 0 0 0;font-size:10px;color:#9ca3af;max-width:320px;margin:0 auto;">
+    <span>業種</span>
+    <span>困りごと</span>
+    <span>一言メモ</span>
+    <span>結果</span>
+  </div>
+</div>
+
+<main>
+  <!-- STEP 1: 業種 -->
+  <div id="step1" class="step-card">
+    <span class="step-number">STEP 01</span>
+    <h2 class="step-title">どの業種ですか？</h2>
+    <p class="step-desc">一番近いものをタップしてください。</p>
+    <div class="industry-grid">
+      <button class="industry-btn" onclick="selectIndustry(this, '税理士事務所')">
+        <span class="icon">📊</span>
+        <span class="label">税理士事務所</span>
+        <span class="sub">会計・税務・相続</span>
+      </button>
+      <button class="industry-btn" onclick="selectIndustry(this, '製造業')">
+        <span class="icon">🏭</span>
+        <span class="label">製造業</span>
+        <span class="sub">工場・職人・加工</span>
+      </button>
+      <button class="industry-btn" onclick="selectIndustry(this, '飲食業')">
+        <span class="icon">🍽️</span>
+        <span class="label">飲食業</span>
+        <span class="sub">飲食店・カフェ・食品</span>
+      </button>
+      <button class="industry-btn" onclick="selectIndustry(this, '美容業')">
+        <span class="icon">✂️</span>
+        <span class="label">美容業</span>
+        <span class="sub">美容室・エステ・ネイル</span>
+      </button>
+      <button class="industry-btn" onclick="selectIndustry(this, '不動産')">
+        <span class="icon">🏠</span>
+        <span class="label">不動産</span>
+        <span class="sub">売買・賃貸・管理</span>
+      </button>
+      <button class="industry-btn" onclick="selectIndustry(this, 'その他')">
+        <span class="icon">💼</span>
+        <span class="label">その他</span>
+        <span class="sub">上記以外の業種</span>
+      </button>
+    </div>
+    <button class="btn-primary" id="btn1" onclick="goStep2()" disabled>次へ　→</button>
+  </div>
+
+  <!-- STEP 2: 困りごと -->
+  <div id="step2" class="step-card" style="display:none;">
+    <span class="step-number">STEP 02</span>
+    <h2 class="step-title">困っていることを<br>教えてください</h2>
+    <p class="step-desc">当てはまるものをすべてタップ（複数OK）</p>
+    <div class="select-count" id="selectCount">0件 選択中</div>
+    <div class="problem-list" id="problemList"></div>
+    <button class="btn-primary" id="btn2" onclick="goStep3()" disabled>次へ　→</button>
+    <button class="btn-secondary" onclick="goBack(1)">← 業種を変える</button>
+  </div>
+
+  <!-- STEP 3: フリーテキスト -->
+  <div id="step3" class="step-card" style="display:none;">
+    <span class="step-number">STEP 03</span>
+    <h2 class="step-title">一番困っていることを<br>一言で教えてください</h2>
+    <p class="step-desc">入力しなくてもOKです。書いてもらうと、より精度の高い提案ができます✨</p>
+    <textarea
+      class="free-textarea"
+      id="freeText"
+      placeholder="例）お客様からの同じ質問に何度も答えている。引き継ぎができていない。新人が覚えるのに時間がかかりすぎる…"
+      maxlength="200"
+    ></textarea>
+    <p style="text-align:right;font-size:11px;color:#9ca3af;margin-top:6px;" id="charCount">0 / 200文字</p>
+    <button class="btn-primary" onclick="goLoading()">✨ あなたに合うアプリを診断する</button>
+    <button class="btn-secondary" onclick="goBack(2)">← 困りごとを変える</button>
+  </div>
+
+  <!-- STEP 4: ローディング -->
+  <div id="step4" class="step-card" style="display:none;">
+    <div class="loading-wrap">
+      <span class="loading-icon">🔍</span>
+      <h2 class="loading-title">あなたにぴったりの<br>アプリを探しています</h2>
+      <p class="loading-sub">少しだけお待ちください</p>
+      <div class="loading-dots" style="margin-top:16px;">
+        <span>●</span><span>●</span><span>●</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: 結果 -->
+  <div id="step5" class="step-card" style="display:none;">
+    <div class="result-header">
+      <span class="result-badge">🎯 診断結果</span>
+      <h2 class="result-app-name" id="resultAppName"></h2>
+      <p class="result-tagline" id="resultTagline"></p>
+    </div>
+
+    <div class="tag-wrap" id="resultTags"></div>
+
+    <div class="result-divider"></div>
+
+    <p class="reason-title">💡 あなたにおすすめの理由</p>
+    <div class="reason-list" id="resultReasons"></div>
+
+    <div class="result-divider"></div>
+
+    <p class="reason-title">📈 導入するとこう変わる</p>
+    <div class="ba-wrap">
+      <div class="ba-card ba-before">
+        <p class="ba-label">BEFORE</p>
+        <p class="ba-text" id="resultBefore"></p>
+      </div>
+      <div class="ba-card ba-after">
+        <p class="ba-label">AFTER</p>
+        <p class="ba-text" id="resultAfter"></p>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <p class="cta-title">まずは無料で試してみませんか？</p>
+      <p class="cta-sub">Smile Plus Consulting では<br>初回ご相談を無料でお受けしています。<br>お気軽にお声がけください😊</p>
+      <a href="#" class="btn-cta" id="ctaBtn">📩 無料相談する</a>
+      <button class="btn-retry" onclick="restart()">もう一度診断する</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Powered by <span>Smile Plus Consulting</span></p>
+  <p style="margin-top:4px;">「考えるを、ひとりにしない」</p>
+</footer>
+
+<script>
+// ========================
+// データ定義
+// ========================
+
+const problems = [
+  { id: 'p1', emoji: '🔁', text: '毎日同じ質問・説明に追われている', score: { '秘書みっけ': 5, '匿名化くん': 3 } },
+  { id: 'p2', emoji: '📋', text: '紙やExcelの管理が限界になってきた', score: { '財務みっけ': 4, '売上みっけ': 3, '秘書みっけ': 2 } },
+  { id: 'p3', emoji: '📞', text: 'お問い合わせ対応に時間がかかっている', score: { '秘書みっけ': 5, '代行みっけ': 3 } },
+  { id: 'p4', emoji: '📝', text: '見積もりや提案書の作成が大変', score: { '売上みっけ': 5, '代行みっけ': 3 } },
+  { id: 'p5', emoji: '👥', text: 'スタッフの採用・教育がうまくいかない', score: { '採用みっけ': 6, '秘書みっけ': 2 } },
+  { id: 'p6', emoji: '📣', text: '集客・新規顧客の獲得が難しい', score: { '売上みっけ': 4, 'noteみっけ': 3 } },
+  { id: 'p7', emoji: '📁', text: '引き継ぎやマニュアルが整備できていない', score: { '秘書みっけ': 5, '採用みっけ': 2 } },
+  { id: 'p8', emoji: '🏛️', text: '相続・法律・手続きの相談が多い', score: { '相続みっけ': 6, '匿名化くん': 3 } },
+  { id: 'p9', emoji: '💰', text: '経営数字や財務状況が把握しにくい', score: { '財務みっけ': 6, '社長ドック': 4 } },
+  { id: 'p10', emoji: '🌐', text: 'Web・SNSの発信が続かない', score: { 'noteみっけ': 5, '売上みっけ': 2 } },
+];
+
+const appData = {
+  '秘書みっけ': {
+    tagline: 'FAQ・問い合わせ対応を自動化！\nスタッフへの同じ説明を、ゼロにする',
+    tags: ['FAQ自動化', '問い合わせ対応', 'マニュアル化'],
+    reasons: [
+      '毎日繰り返す同じ説明をアプリが代わりに答えてくれます',
+      'スタッフ・お客様どちらへの案内にも使えます',
+      'マニュアルがない職場でも、会話形式で自然に情報が整理されます',
+    ],
+    before: '毎日同じ質問に答え続けて、本来の仕事に集中できない',
+    after: 'アプリが24時間対応。あなたは大切な仕事に専念できる',
+  },
+  '採用みっけ': {
+    tagline: '採用から教育まで一気通貫！\n「人手不足」を仕組みで解決する',
+    tags: ['採用支援', 'スタッフ育成', 'マニュアル自動作成'],
+    reasons: [
+      '採用コンテンツ（求人票・面接Q&A）をAIが一発生成',
+      '新人スタッフの研修・教育に使えるQ&Aを自動生成できます',
+      '採用から定着まで、一貫した仕組みが作れます',
+    ],
+    before: '採用に時間とお金をかけても、すぐ辞められてしまう',
+    after: '「この職場で長く働きたい」と思ってもらえる採用の仕組みができる',
+  },
+  '財務みっけ': {
+    tagline: '経営の数字を「見える化」！\n社長が毎月10分で財務を把握できる',
+    tags: ['財務分析', '経営数字の見える化', 'Excel卒業'],
+    reasons: [
+      'ExcelやノートでバラバラだったKPIを一カ所にまとめて管理',
+      '毎月の財務状況を自動でチェックして、改善ポイントを提示',
+      '社長ひとりでも数字を把握して経営判断できるようになります',
+    ],
+    before: '試算表はもらっているけど、何を見ればいいかわからない',
+    after: '毎月10分で経営の健康状態を把握。先手の経営判断ができる',
+  },
+  '相続みっけ': {
+    tagline: '相続・税務の相談をスムーズに！\nお客様の不安を「見える化」して信頼を深める',
+    tags: ['相続対応', '税務相談', 'お客様対応'],
+    reasons: [
+      '相続相談でよくある質問をAIが事前に整理・可視化',
+      'お客様が自分でアプリに入力することで、相談前の準備ができます',
+      '税理士・弁護士のブランド力向上にも使えます',
+    ],
+    before: '相談のたびにゼロから状況を聞き直す手間がかかっている',
+    after: '事前情報が整理された状態で相談スタート。相談時間が大幅に短縮',
+  },
+  '売上みっけ': {
+    tagline: '売上アップのヒントを「見える化」！\n埋もれた強みをデータで引き出す',
+    tags: ['売上分析', '提案書作成', 'ビジネス改善'],
+    reasons: [
+      '自社の強み・改善点をAIが整理して、行動につながるアドバイスを提示',
+      '見積もり・提案書の作成をサポート。商談の準備が格段に楽になります',
+      '売上データを入力するだけで改善アクションが見えてきます',
+    ],
+    before: '頑張っているのに売上が伸びない。何が問題かわからない',
+    after: '売上の課題が「見える化」されて、打ち手が明確になる',
+  },
+  '匿名化くん': {
+    tagline: '個人情報を守りながらAIを活用！\n士業事務所のセキュリティ問題を解決',
+    tags: ['個人情報保護', 'AI安全活用', '士業向け'],
+    reasons: [
+      '相談内容の固有名詞を自動で匿名化してAIに安全入力できます',
+      '弁護士・税理士・社労士など士業事務所での活用実績あり',
+      '個人情報漏洩リスクを下げながら、AIの恩恵を最大化できます',
+    ],
+    before: 'AIを使いたいけど、個人情報の扱いが怖くて踏み切れない',
+    after: '安心してAIを業務活用。事務作業の効率が大幅にアップ',
+  },
+  '社長ドック': {
+    tagline: '経営の健康診断を毎月！\n社長ひとりで会社の課題を整理できる',
+    tags: ['経営診断', '戦略整理', 'ひとり社長向け'],
+    reasons: [
+      '月1回の経営チェックリストで、問題を早期発見できます',
+      '「何となく不安」な経営課題を言語化してくれます',
+      'ひとり社長・少人数経営の方に特化した設計です',
+    ],
+    before: '誰にも相談できず、経営の悩みをひとりで抱えている',
+    after: 'アプリが伴走。毎月の経営チェックで先手の判断ができる',
+  },
+  'noteみっけ': {
+    tagline: 'SNS・note発信を自動サポート！\n「書けない」を「書ける」に変える',
+    tags: ['SNS発信', 'note執筆', 'コンテンツ作成'],
+    reasons: [
+      'ネタがなくても、業種・悩みを入れるだけで投稿文を自動生成',
+      'note・Instagram・LINE配信など複数媒体向けの文章を一括生成',
+      '発信を継続することで、問い合わせや集客につながります',
+    ],
+    before: 'SNSやnoteを始めたいけど、何を書けばいいかわからない',
+    after: '週1本の発信が習慣化。「この人に頼もう」という信頼が積み上がる',
+  },
+  '代行みっけ': {
+    tagline: '外注・代行先の選定をスマートに！\n業務委託の失敗リスクを下げる',
+    tags: ['外注管理', '業務委託', 'コスト削減'],
+    reasons: [
+      '外注先に依頼する際の要件定義・依頼文をAIが自動作成',
+      '「何を頼めばいいか」から整理して、適切な業務委託ができます',
+      '外注コストの無駄をなくして、本業への集中が実現します',
+    ],
+    before: '外注したのに思った通りの仕上がりにならない',
+    after: '明確な依頼書でスムーズな業務委託。品質とコストが安定',
+  },
+};
+
+// 業種別ボーナス
+const industryBonus = {
+  '税理士事務所': { '匿名化くん': 4, '相続みっけ': 4, '財務みっけ': 2 },
+  '製造業':       { '売上みっけ': 3, '採用みっけ': 3, '財務みっけ': 2 },
+  '飲食業':       { '売上みっけ': 3, '採用みっけ': 3, 'noteみっけ': 2 },
+  '美容業':       { '採用みっけ': 3, 'noteみっけ': 3, '秘書みっけ': 2 },
+  '不動産':       { '売上みっけ': 3, '秘書みっけ': 3, '採用みっけ': 2 },
+  'その他':       { '秘書みっけ': 2, '売上みっけ': 2, '社長ドック': 2 },
+};
+
+// ========================
+// 状態管理
+// ========================
+let selectedIndustry = '';
+let selectedProblems = new Set();
+
+// ========================
+// STEP 1: 業種選択
+// ========================
+function selectIndustry(btn, industry) {
+  document.querySelectorAll('.industry-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedIndustry = industry;
+  document.getElementById('btn1').disabled = false;
+}
+
+function goStep2() {
+  showStep(2);
+  updateProgress(2);
+  renderProblems();
+}
+
+function renderProblems() {
+  const list = document.getElementById('problemList');
+  list.innerHTML = '';
+  problems.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'problem-item' + (selectedProblems.has(p.id) ? ' selected' : '');
+    div.innerHTML = `
+      <span class="problem-emoji">${p.emoji}</span>
+      <div class="check-box">${selectedProblems.has(p.id) ? '✓' : ''}</div>
+      <span class="problem-text">${p.text}</span>
+    `;
+    div.onclick = () => toggleProblem(p.id, div);
+    list.appendChild(div);
+  });
+  updateSelectCount();
+}
+
+function toggleProblem(id, el) {
+  if (selectedProblems.has(id)) {
+    selectedProblems.delete(id);
+    el.classList.remove('selected');
+    el.querySelector('.check-box').textContent = '';
+  } else {
+    selectedProblems.add(id);
+    el.classList.add('selected');
+    el.querySelector('.check-box').textContent = '✓';
+  }
+  updateSelectCount();
+}
+
+function updateSelectCount() {
+  const count = selectedProblems.size;
+  document.getElementById('selectCount').textContent = count + '件 選択中';
+  document.getElementById('btn2').disabled = count === 0;
+}
+
+function goStep3() {
+  showStep(3);
+  updateProgress(3);
+  const ta = document.getElementById('freeText');
+  ta.addEventListener('input', () => {
+    document.getElementById('charCount').textContent = ta.value.length + ' / 200文字';
+  });
+}
+
+// ========================
+// STEP 4: ローディング
+// ========================
+function goLoading() {
+  showStep(4);
+  updateProgress(4);
+  setTimeout(() => {
+    showResult();
+  }, 2200);
+}
+
+// ========================
+// STEP 5: 結果表示
+// ========================
+function showResult() {
+  // スコア集計
+  const scores = {};
+  Object.keys(appData).forEach(k => scores[k] = 0);
+
+  // 困りごとスコア
+  selectedProblems.forEach(pid => {
+    const p = problems.find(x => x.id === pid);
+    if (p) {
+      Object.entries(p.score).forEach(([app, s]) => {
+        if (scores[app] !== undefined) scores[app] += s;
+      });
+    }
+  });
+
+  // 業種ボーナス
+  const bonus = industryBonus[selectedIndustry] || {};
+  Object.entries(bonus).forEach(([app, b]) => {
+    if (scores[app] !== undefined) scores[app] += b;
+  });
+
+  // 最高スコアのアプリ
+  const best = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+  const data = appData[best];
+
+  // 結果を描画
+  document.getElementById('resultAppName').textContent = best;
+  document.getElementById('resultTagline').textContent = data.tagline;
+
+  const tagsEl = document.getElementById('resultTags');
+  tagsEl.innerHTML = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+  const reasonsEl = document.getElementById('resultReasons');
+  reasonsEl.innerHTML = data.reasons.map((r, i) => `
+    <div class="reason-item">
+      <span class="reason-num">${i + 1}</span>
+      <span>${r}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('resultBefore').textContent = data.before;
+  document.getElementById('resultAfter').textContent = data.after;
+
+  showStep(5);
+  updateProgress(5);
+}
+
+// ========================
+// ユーティリティ
+// ========================
+function showStep(n) {
+  [1, 2, 3, 4, 5].forEach(i => {
+    document.getElementById('step' + i).style.display = i === n ? 'block' : 'none';
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress(step) {
+  [1, 2, 3, 4].forEach(i => {
+    const dot = document.getElementById('dot' + i);
+    if (i < step) { dot.className = 'step-dot done'; dot.textContent = '✓'; }
+    else if (i === step) { dot.className = 'step-dot active'; dot.textContent = i; }
+    else { dot.className = 'step-dot'; dot.textContent = i; }
+  });
+  [1, 2, 3].forEach(i => {
+    const line = document.getElementById('line' + i);
+    line.className = 'step-line' + (i < step ? ' done' : '');
+  });
+}
+
+function goBack(stepNum) {
+  showStep(stepNum);
+  updateProgress(stepNum);
+}
+
+function restart() {
+  selectedIndustry = '';
+  selectedProblems = new Set();
+  document.getElementById('freeText').value = '';
+  document.getElementById('charCount').textContent = '0 / 200文字';
+  document.querySelectorAll('.industry-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('btn1').disabled = true;
+  showStep(1);
+  updateProgress(1);
+}
+</script>
+</body>
+</html>
