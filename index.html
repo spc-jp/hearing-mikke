@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ヒヤリングみっけ｜あなたの困りごとがアプリになる</title>
+<title>ヒヤリングみっけ｜あなたの困りごとをお聞かせください</title>
 <link rel="icon" type="image/png" href="https://spc-jp.github.io/hearing-mikke/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -20,13 +20,13 @@
   .hs { color:rgba(255,255,255,0.7); font-size:12px; margin-top:8px; position:relative; z-index:1; }
 
   .prog-wrap { background:#fff; padding:16px 24px 12px; border-bottom:1px solid #e5e7eb; }
-  .prog-row { display:flex; justify-content:center; gap:6px; align-items:center; max-width:360px; margin:0 auto; }
+  .prog-row { display:flex; justify-content:center; gap:6px; align-items:center; max-width:320px; margin:0 auto; }
   .dot { width:26px; height:26px; border-radius:50%; background:#e5e7eb; color:#9ca3af; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .3s; }
   .dot.on { background:var(--navy); color:#fff; box-shadow:0 0 0 3px rgba(34,54,112,0.2); }
   .dot.ok { background:var(--gold); color:#fff; }
-  .ln { flex:1; max-width:28px; height:2px; background:#e5e7eb; transition:background .3s; }
+  .ln { flex:1; max-width:30px; height:2px; background:#e5e7eb; transition:background .3s; }
   .ln.ok { background:var(--gold); }
-  .prog-labels { display:flex; justify-content:space-between; font-size:9px; color:#9ca3af; max-width:360px; margin:6px auto 0; padding:0 2px; }
+  .prog-labels { display:flex; justify-content:space-between; font-size:9px; color:#9ca3af; max-width:320px; margin:6px auto 0; }
 
   main { max-width:600px; margin:0 auto; padding:24px 16px 60px; }
 
@@ -49,7 +49,7 @@
   .pi { display:flex; align-items:center; gap:12px; border:2px solid #e5e7eb; border-radius:12px; padding:14px 16px; cursor:pointer; transition:all .2s; background:#fff; }
   .pi:hover { border-color:var(--navy); background:#f0f4ff; }
   .pi.sel { border-color:var(--gold); background:linear-gradient(135deg,#fffbea,#fff8d6); }
-  .cb { width:22px; height:22px; border:2px solid #d1d5db; border-radius:6px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; font-size:13px; }
+  .cb { width:22px; height:22px; border:2px solid #d1d5db; border-radius:6px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:13px; }
   .pi.sel .cb { background:var(--gold); border-color:var(--gold); color:#fff; }
   .pe { font-size:18px; flex-shrink:0; }
   .pt { font-size:13px; font-weight:500; color:var(--text); line-height:1.5; }
@@ -73,50 +73,31 @@
   .bs { width:100%; background:transparent; color:var(--muted); border:2px solid #e5e7eb; border-radius:12px; padding:14px; font-family:'Noto Sans JP',sans-serif; font-size:13px; font-weight:500; cursor:pointer; transition:all .2s; margin-top:10px; }
   .bs:hover { border-color:var(--navy); color:var(--navy); }
 
-  .lw { text-align:center; padding:40px 0; }
-  .li { font-size:48px; display:block; margin:0 auto 16px; animation:spin 1.5s linear infinite; }
-  @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
-  .lt { font-family:'Noto Serif JP',serif; font-size:18px; color:var(--navy); margin-bottom:8px; }
-  .ld span { display:inline-block; animation:blink 1.2s infinite; font-size:20px; color:var(--gold); margin-top:16px; }
-  .ld span:nth-child(2){animation-delay:.3s} .ld span:nth-child(3){animation-delay:.6s}
-  @keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+  /* 送信画面 */
+  .send-section { margin-bottom:24px; }
+  .send-title { font-family:'Noto Serif JP',serif; font-size:15px; font-weight:700; color:var(--navy); margin-bottom:14px; }
+  .line-btn { display:flex; align-items:center; justify-content:center; gap:10px; background:#06C755; color:#fff; border-radius:12px; padding:16px; font-family:'Noto Sans JP',sans-serif; font-size:15px; font-weight:700; cursor:pointer; letter-spacing:1px; width:100%; border:none; transition:all .2s; margin-bottom:12px; }
+  .line-btn:hover { background:#05a848; transform:translateY(-1px); }
+  .mail-btn { display:flex; align-items:center; justify-content:center; gap:10px; background:#fff; color:var(--navy); border:2px solid var(--navy); border-radius:12px; padding:15px; font-family:'Noto Sans JP',sans-serif; font-size:15px; font-weight:700; cursor:pointer; letter-spacing:1px; width:100%; transition:all .2s; }
+  .mail-btn:hover { background:#f0f4ff; transform:translateY(-1px); }
 
-  .rh { text-align:center; margin-bottom:24px; }
-  .rb { display:inline-block; background:linear-gradient(135deg,var(--gold),#e8bc00); color:#fff; font-size:11px; font-weight:700; letter-spacing:2px; padding:6px 16px; border-radius:20px; margin-bottom:12px; }
-  .rn { font-family:'Noto Serif JP',serif; font-size:26px; font-weight:700; color:var(--navy); margin-bottom:6px; }
-  .rtl { font-size:13px; color:var(--muted); line-height:1.7; white-space:pre-line; }
-  .rd { height:1px; background:linear-gradient(to right,transparent,var(--gold),transparent); margin:20px 0; }
-  .rt2 { font-family:'Noto Serif JP',serif; font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; }
-  .rl { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
-  .ri { display:flex; gap:10px; align-items:flex-start; background:#f8faff; border-left:3px solid var(--navy); border-radius:0 8px 8px 0; padding:10px 12px; font-size:13px; line-height:1.6; }
-  .rnum { font-size:11px; background:var(--navy); color:#fff; width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
-  .baw { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
-  .bac { border-radius:10px; padding:14px 12px; }
-  .bef { background:#fef2f2; border:1px solid #fca5a5; }
-  .aft { background:#f0fdf4; border:1px solid #86efac; }
-  .bal { font-size:10px; font-weight:700; letter-spacing:2px; margin-bottom:8px; }
-  .bef .bal { color:#ef4444; } .aft .bal { color:#22c55e; }
-  .bat { font-size:12px; line-height:1.6; color:var(--text); }
-  .tw { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
-  .tg { background:#eef2ff; color:var(--navy); font-size:11px; font-weight:500; padding:4px 10px; border-radius:20px; border:1px solid #c7d2fe; }
-
-  .cta { background:linear-gradient(135deg,var(--navy),#1a2a5a); border-radius:14px; padding:24px 20px; text-align:center; margin-top:20px; }
-  .ctt { font-family:'Noto Serif JP',serif; color:#fff; font-size:16px; font-weight:700; margin-bottom:6px; }
-  .cts { color:rgba(255,255,255,0.75); font-size:12px; margin-bottom:16px; line-height:1.8; }
-  .line-btn { display:flex; align-items:center; justify-content:center; gap:10px; background:#06C755; color:#fff; border-radius:12px; padding:16px; font-family:'Noto Sans JP',sans-serif; font-size:15px; font-weight:700; cursor:pointer; letter-spacing:1px; width:100%; border:none; transition:all .2s; }
-  .line-btn:hover { background:#05a848; transform:translateY(-1px); box-shadow:0 6px 20px rgba(6,199,85,.35); }
-  .retry { display:block; margin-top:12px; color:rgba(255,255,255,0.55); font-size:12px; background:none; border:none; cursor:pointer; text-decoration:underline; }
-
-  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(10px); background:#1a1a2e; color:#fff; padding:12px 20px; border-radius:10px; font-size:13px; font-weight:500; opacity:0; transition:all .35s; z-index:999; max-width:88vw; text-align:center; line-height:1.6; box-shadow:0 4px 20px rgba(0,0,0,.3); }
-  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
+  /* 送信完了画面 */
+  .done-wrap { text-align:center; padding:16px 0 24px; }
+  .done-icon { font-size:56px; display:block; margin-bottom:16px; }
+  .done-title { font-family:'Noto Serif JP',serif; font-size:20px; font-weight:700; color:var(--navy); margin-bottom:12px; line-height:1.5; }
+  .done-box { background:linear-gradient(135deg,#fffbea,#fff8d6); border:2px solid var(--gold); border-radius:14px; padding:20px; margin:20px 0; text-align:left; }
+  .done-box-title { font-family:'Noto Serif JP',serif; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+  .done-box-text { font-size:13px; line-height:1.8; color:var(--text); }
+  .done-sub { font-size:12px; color:var(--muted); line-height:1.8; margin-bottom:20px; }
+  .retry { width:100%; background:transparent; color:var(--muted); border:2px solid #e5e7eb; border-radius:12px; padding:14px; font-family:'Noto Sans JP',sans-serif; font-size:13px; cursor:pointer; transition:all .2s; margin-top:8px; }
+  .retry:hover { border-color:var(--navy); color:var(--navy); }
 
   /* メールモーダル */
   .overlay { position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:900; display:none; align-items:center; justify-content:center; padding:16px; }
   .overlay.open { display:flex; }
   .modal { background:#fff; border-radius:20px; padding:28px 24px; width:100%; max-width:420px; position:relative; animation:up .3s ease; }
   .modal-title { font-family:'Noto Serif JP',serif; font-size:18px; font-weight:700; color:var(--navy); text-align:center; margin-bottom:20px; }
-  .modal-close { position:absolute; top:14px; right:18px; font-size:20px; color:var(--muted); background:none; border:none; cursor:pointer; line-height:1; }
+  .modal-close { position:absolute; top:14px; right:18px; font-size:20px; color:var(--muted); background:none; border:none; cursor:pointer; }
   .mail-opt { display:flex; align-items:center; gap:14px; border:2px solid #e5e7eb; border-radius:14px; padding:16px; cursor:pointer; transition:all .2s; background:#fff; width:100%; margin-bottom:12px; font-family:'Noto Sans JP',sans-serif; }
   .mail-opt:hover { border-color:var(--navy); background:#f0f4ff; }
   .mail-icon { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px; }
@@ -124,10 +105,10 @@
   .mail-icon.red  { background:#fee2e2; }
   .mail-opt-title { font-size:14px; font-weight:700; color:var(--navy); text-align:left; }
   .mail-opt-sub   { font-size:11px; color:var(--muted); margin-top:2px; text-align:left; }
-  .modal-divider { font-size:12px; color:var(--muted); margin:16px 0 10px; font-weight:700; }
-  .copy-area { width:100%; border:1px solid #e5e7eb; border-radius:8px; padding:10px 12px; font-size:12px; color:var(--text); font-family:'Noto Sans JP',sans-serif; resize:none; height:90px; background:#f9fafb; }
+  .modal-hint { font-size:11px; color:var(--muted); margin:16px 0 8px; font-weight:700; }
   .copy-hint { font-size:11px; color:var(--muted); line-height:1.6; margin-bottom:8px; }
   .copy-hint span { color:var(--navy); font-weight:700; }
+  .copy-area { width:100%; border:1px solid #e5e7eb; border-radius:8px; padding:10px 12px; font-size:12px; color:var(--text); font-family:'Noto Sans JP',sans-serif; resize:none; height:90px; background:#f9fafb; }
   .btn-copy { width:100%; background:#f3f4f6; color:var(--navy); border:2px solid #e5e7eb; border-radius:10px; padding:13px; font-family:'Noto Sans JP',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; margin-top:8px; }
   .btn-copy:hover { background:#e5e7eb; }
   .btn-copy.copied { background:var(--gold); color:#fff; border-color:var(--gold); }
@@ -141,7 +122,7 @@
 <header>
   <p class="hl">Smile Plus Consulting</p>
   <h1 class="ht">ヒヤリング<span>みっけ</span></h1>
-  <p class="hs">あなたの困りごとが、アプリになる</p>
+  <p class="hs">あなたの困りごとをお聞かせください</p>
 </header>
 
 <div class="prog-wrap">
@@ -149,33 +130,32 @@
     <div class="dot on" id="d1">1</div><div class="ln" id="l1"></div>
     <div class="dot" id="d2">2</div><div class="ln" id="l2"></div>
     <div class="dot" id="d3">3</div><div class="ln" id="l3"></div>
-    <div class="dot" id="d4">4</div><div class="ln" id="l4"></div>
-    <div class="dot" id="d5">5</div>
+    <div class="dot" id="d4">4</div>
   </div>
   <div class="prog-labels">
-    <span>業種</span><span>困りごと</span><span>一言メモ</span><span>お客様情報</span><span>結果</span>
+    <span>業種</span><span>困りごと</span><span>一言メモ</span><span>お客様情報</span>
   </div>
 </div>
 
 <main>
 
-<!-- STEP1 -->
+<!-- STEP1 業種 -->
 <div id="s1" class="card">
   <span class="sn">STEP 01</span>
   <h2 class="st">どの業種ですか？</h2>
   <p class="sd">一番近いものをタップしてください。</p>
   <div class="ig">
-    <button class="ib" onclick="selInd(this,'税理士事務所')"><span class="ic">📊</span><span class="il">税理士事務所</span><span class="is">会計・税務・相続</span></button>
+    <button class="ib" onclick="selInd(this,'税理士')"><span class="ic">📊</span><span class="il">税理士</span><span class="is">会計・税務・相続</span></button>
+    <button class="ib" onclick="selInd(this,'士業')"><span class="ic">⚖️</span><span class="il">士業</span><span class="is">弁護士・社労士・診断士</span></button>
     <button class="ib" onclick="selInd(this,'製造業')"><span class="ic">🏭</span><span class="il">製造業</span><span class="is">工場・職人・加工</span></button>
-    <button class="ib" onclick="selInd(this,'飲食業')"><span class="ic">🍽️</span><span class="il">飲食業</span><span class="is">飲食店・カフェ・食品</span></button>
-    <button class="ib" onclick="selInd(this,'美容業')"><span class="ic">✂️</span><span class="il">美容業</span><span class="is">美容室・エステ・ネイル</span></button>
+    <button class="ib" onclick="selInd(this,'建設業')"><span class="ic">🏗️</span><span class="il">建設業</span><span class="is">建築・土木・工事</span></button>
     <button class="ib" onclick="selInd(this,'不動産')"><span class="ic">🏠</span><span class="il">不動産</span><span class="is">売買・賃貸・管理</span></button>
     <button class="ib" onclick="selInd(this,'その他')"><span class="ic">💼</span><span class="il">その他</span><span class="is">上記以外の業種</span></button>
   </div>
   <button class="bp" id="b1" onclick="go(2)" disabled>次へ　→</button>
 </div>
 
-<!-- STEP2 -->
+<!-- STEP2 困りごと -->
 <div id="s2" class="card" style="display:none">
   <span class="sn">STEP 02</span>
   <h2 class="st">困っていることを<br>教えてください</h2>
@@ -186,7 +166,7 @@
   <button class="bs" onclick="go(1)">← 業種を変える</button>
 </div>
 
-<!-- STEP3 -->
+<!-- STEP3 一言メモ -->
 <div id="s3" class="card" style="display:none">
   <span class="sn">STEP 03</span>
   <h2 class="st">一番困っていることを<br>一言で教えてください</h2>
@@ -197,7 +177,7 @@
   <button class="bs" onclick="go(2)">← 困りごとを変える</button>
 </div>
 
-<!-- STEP4 -->
+<!-- STEP4 お客様情報 -->
 <div id="s4" class="card" style="display:none">
   <span class="sn">STEP 04</span>
   <h2 class="st">最後に教えてください</h2>
@@ -212,128 +192,106 @@
       <input type="text" class="ti" id="cn" placeholder="例）田中製作所" maxlength="50">
     </div>
   </div>
-  <button class="bp" id="b4" onclick="goLoad()" disabled>✨ 診断してLINEで送る</button>
+  <button class="bp" id="b4" onclick="go(5)" disabled>内容を確認して送る　→</button>
   <button class="bs" onclick="go(3)">← 一言メモを変える</button>
 </div>
 
-<!-- STEP5 ローディング -->
+<!-- STEP5 送信画面 -->
 <div id="s5" class="card" style="display:none">
-  <div class="lw">
-    <span class="li">🔍</span>
-    <h2 class="lt">あなたにぴったりの<br>アプリを探しています</h2>
-    <p style="font-size:12px;color:var(--muted)">少しだけお待ちください</p>
-    <div class="ld"><span>●</span><span>●</span><span>●</span></div>
-  </div>
-</div>
+  <span class="sn">STEP 05</span>
+  <h2 class="st">送信方法を選んでください</h2>
+  <p class="sd">ヒヤリング内容をSPCにお送りください。<br>内容をもとに最適なアプリをご提案いたします✨</p>
 
-<!-- STEP6 結果 -->
-<div id="s6" class="card" style="display:none">
-  <div class="rh">
-    <span class="rb">🎯 診断結果</span>
-    <h2 class="rn" id="rn"></h2>
-    <p class="rtl" id="rtl"></p>
-  </div>
-  <div class="tw" id="rtg"></div>
-  <div class="rd"></div>
-  <p class="rt2">💡 あなたにおすすめの理由</p>
-  <div class="rl" id="rrs"></div>
-  <div class="rd"></div>
-  <p class="rt2">📈 導入するとこう変わる</p>
-  <div class="baw">
-    <div class="bac bef"><p class="bal">BEFORE</p><p class="bat" id="rb"></p></div>
-    <div class="bac aft"><p class="bal">AFTER</p><p class="bat" id="ra"></p></div>
-  </div>
-  <div class="cta">
-    <p class="ctt">内容をLINEでSPCに送りましょう</p>
-    <p class="cts">ボタンを押すとヒヤリング内容が<br>自動でコピーされます。<br>LINEの入力欄に貼り付けて送信してください✨</p>
+  <div class="send-section">
     <button class="line-btn" onclick="openLine()">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.04 2 11c0 3.27 1.82 6.14 4.58 7.88-.18.66-.67 2.42-.77 2.79-.12.45.17.44.36.32.15-.1 2.37-1.56 3.33-2.19.47.07.96.1 1.5.1 5.52 0 10-4.04 10-9S17.52 2 12 2z"/></svg>
       LINEで送る（内容を自動コピー）
     </button>
-    <div style="height:12px"></div>
-    <button onclick="openMailModal()" style="display:flex;align-items:center;justify-content:center;gap:10px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.4);border-radius:12px;padding:14px;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:1px;width:100%;transition:all .2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.8)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.4)'">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    <button class="mail-btn" onclick="openMailModal()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#223670"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
       メールで送る
     </button>
-    <button class="retry" onclick="restart()">もう一度診断する</button>
+  </div>
+  <button class="bs" onclick="go(4)">← お客様情報を変える</button>
+</div>
+
+<!-- 送信完了画面 -->
+<div id="s6" class="card" style="display:none">
+  <div class="done-wrap">
+    <span class="done-icon">✅</span>
+    <h2 class="done-title">ヒヤリング内容を<br>受け取りました！</h2>
+    <p class="done-sub">お送りいただきありがとうございます。<br>内容をもとに最適なアプリをご提案いたします。</p>
+    <div class="done-box">
+      <p class="done-box-title">📋 送信した内容</p>
+      <p class="done-box-text" id="doneMsg"></p>
+    </div>
+    <p class="done-sub">2〜3営業日以内にSPCよりご連絡差し上げます。<br>しばらくお待ちください😊</p>
+    <button class="retry" onclick="restart()">もう一度入力する</button>
   </div>
 </div>
 
 </main>
-<div class="toast" id="toast"></div>
 
 <!-- メールモーダル -->
-<div class="overlay" id="mailOverlay" onclick="closeMailModal(event)">
-  <div class="modal" id="mailModal">
+<div class="overlay" id="mailOverlay" onclick="closeModal(event)">
+  <div class="modal">
     <button class="modal-close" onclick="document.getElementById('mailOverlay').classList.remove('open')">✕</button>
     <p class="modal-title">送信方法を選んでください</p>
-
     <button class="mail-opt" onclick="sendMailClient()">
       <div class="mail-icon blue">✉️</div>
-      <div>
-        <p class="mail-opt-title">メールソフトで送る</p>
-        <p class="mail-opt-sub">Outlook, Macメールなど設定済みの方</p>
-      </div>
+      <div><p class="mail-opt-title">メールソフトで送る</p><p class="mail-opt-sub">Outlook, Macメールなど設定済みの方</p></div>
     </button>
-
     <button class="mail-opt" onclick="sendGmail()">
       <div class="mail-icon red">📤</div>
-      <div>
-        <p class="mail-opt-title">Gmailで送る</p>
-        <p class="mail-opt-sub">ブラウザでGmailをお使いの方</p>
-      </div>
+      <div><p class="mail-opt-title">Gmailで送る</p><p class="mail-opt-sub">ブラウザでGmailをお使いの方</p></div>
     </button>
-
-    <p class="modal-divider">うまくいかない場合は...</p>
+    <p class="modal-hint">うまくいかない場合は...</p>
     <p class="copy-hint">以下の本文をコピーして、使い慣れたメール等の本文に貼り付けて<br><span>spc@smileplusctg.com</span> までお送りください。</p>
     <textarea class="copy-area" id="mailBody" readonly></textarea>
-    <button class="btn-copy" id="copyBtn" onclick="copyMailBody()">本文をコピーする</button>
+    <button class="btn-copy" id="copyBtn" onclick="copyBody()">本文をコピーする</button>
   </div>
 </div>
 
-<footer><p>Powered by <span>Smile Plus Consulting</span></p><p style="margin-top:4px">「考えるを、ひとりにしない」</p></footer>
+<footer>
+  <p>Powered by <span>Smile Plus Consulting</span></p>
+  <p style="margin-top:4px">「考えるを、ひとりにしない」</p>
+</footer>
 
 <script>
 const PROBS = [
-  {id:'p1',e:'🔁',t:'毎日同じ質問・説明に追われている',s:{'秘書みっけ':5,'匿名化くん':3}},
-  {id:'p2',e:'📋',t:'紙やExcelの管理が限界になってきた',s:{'財務みっけ':4,'売上みっけ':3,'秘書みっけ':2}},
-  {id:'p3',e:'📞',t:'お問い合わせ対応に時間がかかっている',s:{'秘書みっけ':5,'代行みっけ':3}},
-  {id:'p4',e:'📝',t:'見積もりや提案書の作成が大変',s:{'売上みっけ':5,'代行みっけ':3}},
-  {id:'p5',e:'👥',t:'スタッフの採用・教育がうまくいかない',s:{'採用みっけ':6,'秘書みっけ':2}},
-  {id:'p6',e:'📣',t:'集客・新規顧客の獲得が難しい',s:{'売上みっけ':4,'noteみっけ':3}},
-  {id:'p7',e:'📁',t:'引き継ぎやマニュアルが整備できていない',s:{'秘書みっけ':5,'採用みっけ':2}},
-  {id:'p8',e:'🏛️',t:'相続・法律・手続きの相談が多い',s:{'相続みっけ':6,'匿名化くん':3}},
-  {id:'p9',e:'💰',t:'経営数字や財務状況が把握しにくい',s:{'財務みっけ':6,'社長ドック':4}},
-  {id:'p10',e:'🌐',t:'Web・SNSの発信が続かない',s:{'noteみっけ':5,'売上みっけ':2}},
+  {id:'p1',e:'🔁',t:'毎日同じ質問・説明に追われている'},
+  {id:'p2',e:'📋',t:'紙やExcelの管理が限界になってきた'},
+  {id:'p3',e:'📞',t:'お問い合わせ対応に時間がかかっている'},
+  {id:'p4',e:'📝',t:'見積もりや提案書の作成が大変'},
+  {id:'p5',e:'👥',t:'スタッフの採用・教育がうまくいかない'},
+  {id:'p6',e:'📣',t:'集客・新規顧客の獲得が難しい'},
+  {id:'p7',e:'📁',t:'引き継ぎやマニュアルが整備できていない'},
+  {id:'p8',e:'🏛️',t:'相続・法律・手続きの相談が多い'},
+  {id:'p9',e:'💰',t:'経営数字や財務状況が把握しにくい'},
+  {id:'p10',e:'🌐',t:'Web・SNSの発信が続かない'},
 ];
-const APPS = {
-  '秘書みっけ':{tl:'FAQ・問い合わせ対応を自動化！\nスタッフへの同じ説明を、ゼロにする',tg:['FAQ自動化','問い合わせ対応','マニュアル化'],rs:['毎日繰り返す同じ説明をアプリが代わりに答えてくれます','スタッフ・お客様どちらへの案内にも使えます','マニュアルがない職場でも会話形式で情報が自然に整理されます'],bf:'毎日同じ質問に答え続けて、本来の仕事に集中できない',af:'アプリが24時間対応。あなたは大切な仕事に専念できる'},
-  '採用みっけ':{tl:'採用から教育まで一気通貫！\n「人手不足」を仕組みで解決する',tg:['採用支援','スタッフ育成','マニュアル自動作成'],rs:['採用コンテンツ（求人票・面接Q&A）をAIが一発生成','新人スタッフの研修に使えるQ&Aを自動生成できます','採用から定着まで一貫した仕組みが作れます'],bf:'採用に時間とお金をかけても、すぐ辞められてしまう',af:'「この職場で長く働きたい」と思ってもらえる仕組みができる'},
-  '財務みっけ':{tl:'経営の数字を「見える化」！\n社長が毎月10分で財務を把握できる',tg:['財務分析','経営数字の見える化','Excel卒業'],rs:['バラバラだったKPIを一カ所にまとめて管理できます','毎月の財務状況を自動チェックして改善ポイントを提示','社長ひとりでも数字を把握して経営判断できるようになります'],bf:'試算表はもらっているけど、何を見ればいいかわからない',af:'毎月10分で経営の健康状態を把握。先手の判断ができる'},
-  '相続みっけ':{tl:'相続・税務の相談をスムーズに！\nお客様の不安を「見える化」して信頼を深める',tg:['相続対応','税務相談','お客様対応'],rs:['相続相談でよくある質問をAIが事前に整理・可視化','お客様が自分でアプリに入力することで相談前の準備ができます','税理士・弁護士のブランド力向上にも使えます'],bf:'相談のたびにゼロから状況を聞き直す手間がかかっている',af:'事前情報が整理された状態で相談スタート。時間が大幅短縮'},
-  '売上みっけ':{tl:'売上アップのヒントを「見える化」！\n埋もれた強みをデータで引き出す',tg:['売上分析','提案書作成','ビジネス改善'],rs:['自社の強み・改善点をAIが整理して行動につながるアドバイスを提示','見積もり・提案書の作成をサポート。商談準備が格段に楽になります','売上データを入力するだけで改善アクションが見えてきます'],bf:'頑張っているのに売上が伸びない。何が問題かわからない',af:'売上の課題が「見える化」されて、打ち手が明確になる'},
-  '匿名化くん':{tl:'個人情報を守りながらAIを活用！\n士業事務所のセキュリティ問題を解決',tg:['個人情報保護','AI安全活用','士業向け'],rs:['相談内容の固有名詞を自動で匿名化してAIに安全入力できます','弁護士・税理士・社労士など士業事務所での活用実績あり','個人情報漏洩リスクを下げながらAIの恩恵を最大化できます'],bf:'AIを使いたいけど、個人情報の扱いが怖くて踏み切れない',af:'安心してAIを業務活用。事務作業の効率が大幅にアップ'},
-  '社長ドック':{tl:'経営の健康診断を毎月！\n社長ひとりで会社の課題を整理できる',tg:['経営診断','戦略整理','ひとり社長向け'],rs:['月1回の経営チェックリストで問題を早期発見できます','「何となく不安」な経営課題を言語化してくれます','ひとり社長・少人数経営の方に特化した設計です'],bf:'誰にも相談できず、経営の悩みをひとりで抱えている',af:'アプリが伴走。毎月の経営チェックで先手の判断ができる'},
-  'noteみっけ':{tl:'SNS・note発信を自動サポート！\n「書けない」を「書ける」に変える',tg:['SNS発信','note執筆','コンテンツ作成'],rs:['ネタがなくても業種・悩みを入れるだけで投稿文を自動生成','note・Instagram・LINE配信など複数媒体向けの文章を一括生成','発信を継続することで問い合わせや集客につながります'],bf:'SNSやnoteを始めたいけど、何を書けばいいかわからない',af:'週1本の発信が習慣化。「この人に頼もう」という信頼が積み上がる'},
-  '代行みっけ':{tl:'外注・代行先の選定をスマートに！\n業務委託の失敗リスクを下げる',tg:['外注管理','業務委託','コスト削減'],rs:['外注先への依頼文・要件定義をAIが自動作成','「何を頼めばいいか」から整理して適切な業務委託ができます','外注コストの無駄をなくして本業への集中が実現します'],bf:'外注したのに思った通りの仕上がりにならない',af:'明確な依頼書でスムーズな業務委託。品質とコストが安定'},
-};
-const BONUS = {
-  '税理士事務所':{'匿名化くん':4,'相続みっけ':4,'財務みっけ':2},
-  '製造業':{'売上みっけ':3,'採用みっけ':3,'財務みっけ':2},
-  '飲食業':{'売上みっけ':3,'採用みっけ':3,'noteみっけ':2},
-  '美容業':{'採用みっけ':3,'noteみっけ':3,'秘書みっけ':2},
-  '不動産':{'売上みっけ':3,'秘書みっけ':3,'採用みっけ':2},
-  'その他':{'秘書みっけ':2,'売上みっけ':2,'社長ドック':2},
-};
 
-let ind='', probs=new Set(), best='';
+let ind='', probs=new Set();
 
-function selInd(btn,v){ document.querySelectorAll('.ib').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); ind=v; document.getElementById('b1').disabled=false; }
+function selInd(btn,v){
+  document.querySelectorAll('.ib').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel'); ind=v;
+  document.getElementById('b1').disabled=false;
+}
 
 function go(n){
   if(n===2){ showStep(2); renderProbs(); }
-  else if(n===3){ showStep(3); document.getElementById('ft').oninput=()=>document.getElementById('cc').textContent=document.getElementById('ft').value.length+' / 200文字'; }
-  else if(n===4){ showStep(4); const un=document.getElementById('un'); un.oninput=()=>document.getElementById('b4').disabled=un.value.trim()===''; }
+  else if(n===3){
+    showStep(3);
+    const ft=document.getElementById('ft');
+    ft.oninput=()=>document.getElementById('cc').textContent=ft.value.length+' / 200文字';
+  }
+  else if(n===4){
+    showStep(4);
+    const un=document.getElementById('un');
+    un.oninput=()=>document.getElementById('b4').disabled=un.value.trim()==='';
+    document.getElementById('b4').disabled=un.value.trim()==='';
+  }
   else showStep(n);
   updProg(n);
 }
@@ -347,73 +305,110 @@ function renderProbs(){
     d.onclick=()=>{
       if(probs.has(p.id)){probs.delete(p.id);d.classList.remove('sel');d.querySelector('.cb').textContent='';}
       else{probs.add(p.id);d.classList.add('sel');d.querySelector('.cb').textContent='✓';}
-      const c=probs.size; document.getElementById('sc').textContent=c+'件 選択中'; document.getElementById('b2').disabled=c===0;
+      const c=probs.size;
+      document.getElementById('sc').textContent=c+'件 選択中';
+      document.getElementById('b2').disabled=c===0;
     };
     el.appendChild(d);
   });
-  const c=probs.size; document.getElementById('sc').textContent=c+'件 選択中'; document.getElementById('b2').disabled=c===0;
-}
-
-function goLoad(){
-  showStep(5); updProg(5);
-  const sc={}; Object.keys(APPS).forEach(k=>sc[k]=0);
-  probs.forEach(pid=>{ const p=PROBS.find(x=>x.id===pid); if(p) Object.entries(p.s).forEach(([a,v])=>{if(sc[a]!==undefined)sc[a]+=v;}); });
-  Object.entries(BONUS[ind]||{}).forEach(([a,v])=>{if(sc[a]!==undefined)sc[a]+=v;});
-  best=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0][0];
-  setTimeout(()=>{
-    const d=APPS[best];
-    document.getElementById('rn').textContent=best;
-    document.getElementById('rtl').textContent=d.tl;
-    document.getElementById('rtg').innerHTML=d.tg.map(t=>`<span class="tg">${t}</span>`).join('');
-    document.getElementById('rrs').innerHTML=d.rs.map((r,i)=>`<div class="ri"><span class="rnum">${i+1}</span><span>${r}</span></div>`).join('');
-    document.getElementById('rb').textContent=d.bf;
-    document.getElementById('ra').textContent=d.af;
-    showStep(6); updProg(6);
-  },2200);
+  const c=probs.size;
+  document.getElementById('sc').textContent=c+'件 選択中';
+  document.getElementById('b2').disabled=c===0;
 }
 
 function buildMsg(){
   const name=document.getElementById('un').value.trim();
   const co=document.getElementById('cn').value.trim();
   const ft=document.getElementById('ft').value.trim();
-  const pts=Array.from(probs).map(pid=>{const p=PROBS.find(x=>x.id===pid);return p?'・'+p.t:'';}).join('\n');
+  const pts=Array.from(probs).map(pid=>{
+    const p=PROBS.find(x=>x.id===pid); return p?'・'+p.t:'';
+  }).join('\n');
   let m='【ヒヤリングみっけからのご相談】\n\n';
   m+='お名前：'+name+'\n';
   if(co) m+='会社名：'+co+'\n';
   m+='業種：'+ind+'\n\n';
   m+='■ 困っていること\n'+pts+'\n\n';
   if(ft) m+='■ 一言メモ\n'+ft+'\n\n';
-  m+='■ 診断結果\n'+best+'\n\nご相談よろしくお願いします。';
+  m+='ヒヤリング内容をもとに最適なアプリをご提案いただけますと幸いです。\nよろしくお願いいたします。';
   return m;
 }
 
 function openLine(){
   const msg=buildMsg();
   navigator.clipboard.writeText(msg).then(()=>{
-    toast('✅ ヒヤリング内容をコピーしました！\nLINEの入力欄に貼り付けて送信してください😊');
-    setTimeout(()=>window.open('https://lin.ee/oAgksID','_blank'),900);
+    setTimeout(()=>window.open('https://lin.ee/oAgksID','_blank'),400);
   }).catch(()=>{
-    toast('LINEを開きます。内容を手入力して送信してください😊');
-    setTimeout(()=>window.open('https://lin.ee/oAgksID','_blank'),900);
+    window.open('https://lin.ee/oAgksID','_blank');
   });
+  showDone();
 }
 
-function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),4500); }
+function openMailModal(){
+  document.getElementById('mailBody').value=buildMsg();
+  document.getElementById('copyBtn').textContent='本文をコピーする';
+  document.getElementById('copyBtn').classList.remove('copied');
+  document.getElementById('mailOverlay').classList.add('open');
+}
 
-function showStep(n){ for(let i=1;i<=6;i++){ const e=document.getElementById('s'+i); if(e) e.style.display=i===n?'block':'none'; } window.scrollTo({top:0,behavior:'smooth'}); }
+function closeModal(e){
+  if(e.target===document.getElementById('mailOverlay'))
+    document.getElementById('mailOverlay').classList.remove('open');
+}
+
+function sendMailClient(){
+  const s=encodeURIComponent('ヒヤリングみっけ お問い合わせ');
+  const b=encodeURIComponent(buildMsg());
+  window.location.href='mailto:spc@smileplusctg.com?subject='+s+'&body='+b;
+  document.getElementById('mailOverlay').classList.remove('open');
+  showDone();
+}
+
+function sendGmail(){
+  const s=encodeURIComponent('ヒヤリングみっけ お問い合わせ');
+  const b=encodeURIComponent(buildMsg());
+  window.open('https://mail.google.com/mail/?view=cm&to=spc@smileplusctg.com&su='+s+'&body='+b,'_blank');
+  document.getElementById('mailOverlay').classList.remove('open');
+  showDone();
+}
+
+function copyBody(){
+  const ta=document.getElementById('mailBody');
+  navigator.clipboard.writeText(ta.value).then(()=>{
+    const btn=document.getElementById('copyBtn');
+    btn.textContent='✅ コピーしました！'; btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='本文をコピーする'; btn.classList.remove('copied');},3000);
+  }).catch(()=>{ta.select(); document.execCommand('copy');});
+}
+
+function showDone(){
+  const msg=buildMsg();
+  document.getElementById('doneMsg').textContent=msg;
+  showStep(6); updProg(6);
+}
+
+function showStep(n){
+  for(let i=1;i<=6;i++){
+    const e=document.getElementById('s'+i);
+    if(e) e.style.display=i===n?'block':'none';
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
 function updProg(step){
-  for(let i=1;i<=5;i++){
+  for(let i=1;i<=4;i++){
     const d=document.getElementById('d'+i); if(!d) continue;
-    if(i<step||step===6){d.className='dot ok';d.textContent='✓';}
+    if(i<step){d.className='dot ok';d.textContent='✓';}
     else if(i===step){d.className='dot on';d.textContent=i;}
     else{d.className='dot';d.textContent=i;}
   }
-  for(let i=1;i<=4;i++){ const l=document.getElementById('l'+i); if(l) l.className='ln'+(i<step?' ok':''); }
+  for(let i=1;i<=3;i++){
+    const l=document.getElementById('l'+i);
+    if(l) l.className='ln'+(i<step?' ok':'');
+  }
 }
 
 function restart(){
-  ind=''; probs=new Set(); best='';
+  ind=''; probs=new Set();
   ['ft','un','cn'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
   document.getElementById('cc').textContent='0 / 200文字';
   document.getElementById('b4').disabled=true;
@@ -421,34 +416,6 @@ function restart(){
   document.getElementById('b1').disabled=true;
   showStep(1); updProg(1);
 }
-
-function openMailModal(){
-  const body = buildMsg().replace(/\n/g,'\n');
-  document.getElementById('mailBody').value = body;
-  document.getElementById('mailOverlay').classList.add('open');
-  document.getElementById('copyBtn').textContent = '本文をコピーする';
-  document.getElementById('copyBtn').classList.remove('copied');
-}
-function closeMailModal(e){ if(e.target===document.getElementById('mailOverlay')) document.getElementById('mailOverlay').classList.remove('open'); }
-function sendMailClient(){
-  const subj = encodeURIComponent('ヒヤリングみっけ お問い合わせ');
-  const body = encodeURIComponent(buildMsg());
-  window.location.href = 'mailto:spc@smileplusctg.com?subject='+subj+'&body='+body;
-}
-function sendGmail(){
-  const subj = encodeURIComponent('ヒヤリングみっけ お問い合わせ');
-  const body = encodeURIComponent(buildMsg());
-  window.open('https://mail.google.com/mail/?view=cm&to=spc@smileplusctg.com&su='+subj+'&body='+body,'_blank');
-}
-function copyMailBody(){
-  const ta = document.getElementById('mailBody');
-  navigator.clipboard.writeText(ta.value).then(()=>{
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = '✅ コピーしました！'; btn.classList.add('copied');
-    setTimeout(()=>{ btn.textContent='本文をコピーする'; btn.classList.remove('copied'); }, 3000);
-  }).catch(()=>{ ta.select(); document.execCommand('copy'); });
-}
-
 </script>
 </body>
 </html>
